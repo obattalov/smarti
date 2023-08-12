@@ -102,7 +102,7 @@ class Controller extends BaseController
      * @param  bool  $useBaseUrl // use base pokemons api url (without parameters)
      */    
     private function getPokemonsData($useBaseUrl = false) {
-        $data = json_decode(\Http::get(Config('apis.GALERY_MODULE_URL') . ($useBaseUrl ? "" : $_SERVER["REQUEST_URI"])), true);
+        $data = json_decode(\Http::get(Config('apis.GALLERY_MODULE_URL') . ($useBaseUrl ? "" : $_SERVER["REQUEST_URI"])), true);
         if (isset($data["pokemons"])) {
             foreach($data["pokemons"] as &$pokemon) {
                 $types = [];

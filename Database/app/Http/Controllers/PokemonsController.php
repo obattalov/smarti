@@ -50,19 +50,20 @@ class PokemonsController extends Controller
     }
     
     public function init(Request $request) {
-        set_time_limit(5);
+        set_time_limit(10);
         $db_connection = Config('database.default');
         $db_config = Config("database.connections.{$db_connection}");
-        $exec = 'mysql -h' . $db_config['host'] . ' -P' . $db_config['port'] . ' -u' . $db_config['username'] . ($db_config['password'] ?' -p' . $db_config['password'] : '') . ' ' . $db_config['database'] . ' < ' . __DIR__ . '/../../../storage/app/data.sql';
+        $exec = 'mysql -h ' . $db_config['host'] . ' -P ' . $db_config['port'] . ' -u' . $db_config['username'] . ($db_config['password'] ?' -p' . $db_config['password'] : '') . ' ' . $db_config['database'] . ' < ' . __DIR__ . '/../../../storage/app/data.sql';
         //dd($exec);
         try {
-            exec($exec);
+            $output = shell_exec( "php artisan migrate" . " 2>&1" ) . "\n";
+            $output .= shell_exec( $exec . " 2>&1" );
             if (Pokemon::count()) {
                 return redirect()->route('pokemons.index');
             }
         } catch (Exception $e) {
-            die("<pre>pupulating is failed\ntry to execute\n{$exec}\nin a command shell</pre>");
         }
+        die("<pre>pupulating is failed\n" . print_r($output, true) . "\ntry to execute\n{$exec}\nin a command shell</pre>");
     }
     
 }

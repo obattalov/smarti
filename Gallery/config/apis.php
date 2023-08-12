@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'DB_MODULE_URL' => env('DB_MODULE_URL', "127.0.0.1:8001")
+    'DB_MODULE_URL' => env('DOCKER_DB_MODULE_URL', env('DB_MODULE_URL', "127.0.0.1:8001"))
 ];
