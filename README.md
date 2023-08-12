@@ -1,12 +1,16 @@
 # smarti
 
-set correct local prameters in .env file:
+### for local installation
+- set correct prameters in .env file:
 DB_HOST
 DB_PORT
 DB_USERNAME
 DB_PASSWORD
+- composer install in the each directory
+- php artisan migrate in Database directory
 
 
+### starting with docker
 execute in command shell:
 ```
 cd smarti
@@ -29,5 +33,7 @@ docker run -dit --ip 173.18.5.11 --name gallery-module --network modules-network
 docker run -dit --ip 173.18.5.12 --name editor-module --network modules-network editor-module-image
 docker run -dit --name frontend-module -p 8080:8000 --network modules-network frontend-module-image
 ```
-open http://127.0.0.1:8081/init/ in browser to populate db pokemons
+### finally
+open http://127.0.0.1:8081/init/ to populate db pokemons
+
 use http://127.0.0.1:8080 as a start page
