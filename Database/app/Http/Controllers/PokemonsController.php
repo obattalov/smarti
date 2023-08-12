@@ -50,15 +50,19 @@ class PokemonsController extends Controller
     }
     
     public function init(Request $request) {
-        $exec = 'mysql -u ' . env('DB_USERNAME') . ' -p ' . env('DB_PASSWORD') . ' ' . env('DB_DATABASE') . ' < ' . __DIR__ . '/../../../storage/app/data.sql';
-
-        exec($exec);
-        
-        if (Pokemon::count()) {
-            return redirect()->route('pokemons.index');
+        set_time_limit(5);
+        $db_connection = Config('database.default');
+        $db_config = Config("database.connections.{$db_connection}");
+        $exec = 'mysql -h' . $db_config['host'] . ' -P' . $db_config['port'] . ' -u' . $db_config['username'] . ($db_config['password'] ?' -p' . $db_config['password'] : '') . ' ' . $db_config['database'] . ' < ' . __DIR__ . '/../../../storage/app/data.sql';
+        //dd($exec);
+        try {
+            exec($exec);
+            if (Pokemon::count()) {
+                return redirect()->route('pokemons.index');
+            }
+        } catch (Exception $e) {
+            die("<pre>pupulating is failed\ntry to execute\n{$exec}\nin a command shell</pre>");
         }
-        
-        die("<pre>pupulating is failed\ntry execute\n{$exec}\nin a command shell</pre>");
     }
     
 }
