@@ -1,6 +1,6 @@
 # smarti
 
-set correct local prameters in .env file:
+set correct local prameters in \Database .env file:
 DB_HOST
 DB_PORT
 DB_USERNAME
