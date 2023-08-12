@@ -50,7 +50,7 @@ class PokemonsController extends Controller
     }
     
     public function init(Request $request) {
-        $exec = 'mysql -u ' . env('DB_USERNAME') . ' -p ' . env('DB_PASSWORD') . ' pok_test < ' . __DIR__ . '/../../../storage/app/data.sql';
+        $exec = 'mysql -u ' . env('DB_USERNAME') . ' -p ' . env('DB_PASSWORD') . ' ' . env('DB_DATABASE') . ' < ' . __DIR__ . '/../../../storage/app/data.sql';
 
         exec($exec);
         
