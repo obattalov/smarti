@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Config;
 
 class Controller extends BaseController
 {
