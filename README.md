@@ -6,6 +6,7 @@ DB_HOST
 DB_PORT
 DB_USERNAME
 DB_PASSWORD
+- remove prameters DOCKER_..._MODULE_URL in .env files of Frontend, Gallery and Editor modules
 - composer install in the each directory
 - php artisan migrate in Database directory
 
