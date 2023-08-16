@@ -33,7 +33,11 @@ class PokemonsController extends Controller
         if (Pokemon::where('pokemons.name', '=', $name)->count()) {
             return response()->json(['message' => 'Pokemon with such a name allready exists'], 400);
         }
-        Pokemon::create(['name' => $name])->save();
+        $data = $request->all();
+        $pokemon = Pokemon::create($data);
+        if (isset($data['types']) && $data['types']) {
+            $pokemon->types()->attach($data['types']);
+        }
         return response()->json(['message' => 'Success'], 200);
     }
     
@@ -54,16 +58,14 @@ class PokemonsController extends Controller
         $db_connection = Config('database.default');
         $db_config = Config("database.connections.{$db_connection}");
         $exec = 'mysql -h ' . $db_config['host'] . ' -P ' . $db_config['port'] . ' -u' . $db_config['username'] . ($db_config['password'] ?' -p' . $db_config['password'] : '') . ' ' . $db_config['database'] . ' < ' . __DIR__ . '/../../../storage/app/data.sql';
-        //dd($exec);
         try {
-            $output = shell_exec( "php artisan migrate" . " 2>&1" ) . "\n";
-            $output .= shell_exec( $exec . " 2>&1" );
+            $output = shell_exec( $exec . " 2>&1" );
             if (Pokemon::count()) {
-                return redirect()->route('pokemons.index');
+                return response()->json(['message' => 'Success'], 200);
             }
         } catch (Exception $e) {
         }
-        die("<pre>pupulating is failed\n" . print_r($output, true) . "\ntry to execute\n{$exec}\nin a command shell</pre>");
+        return response()->json(['message' => $output], 400);
     }
     
 }

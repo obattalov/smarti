@@ -9,10 +9,17 @@ use Config;
 class Controller extends BaseController
 {
     public function create(Request $request) {
-        $name = $request->input("name");
-        if ($name != "") {
-            $type = "";
-            $response = \Http::post(Config('apis.DB_MODULE_URL') . "/pokemons/", compact('name'));
+        $data = $request->all();
+        if (isset($data['name']) && $data['name'] != "") {
+            $adapter = Config('adapter');
+            $newData = [];
+            foreach ($data as $k => $v) {
+                if (isset($adapter[$k])) {
+                    $newData[$adapter[$k]] = $v;
+                }
+            }
+//            return response()->json(['message' => json_encode($newData)], 400);
+            $response = \Http::post(Config('apis.DB_MODULE_URL') . "/pokemons/", $newData);
             return response($response, $response->status());
         }
           
@@ -27,5 +34,9 @@ class Controller extends BaseController
         }
           
         return response()->json(['message' => 'Pokemon\'s id is required'], 400);
+    }
+    public function completedb(Request $request) {
+        $response = \Http::get(Config('apis.DB_MODULE_URL') . "/init/");
+        return response($response, $response->status());
     }
 }

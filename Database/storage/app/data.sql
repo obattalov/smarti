@@ -14,6 +14,12 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+/*
+DROP TABLE IF EXISTS `pokemons`;
+DROP TABLE IF EXISTS `types`;
+DROP TABLE IF EXISTS `type_pokemon`;
+*/
+
 DROP TABLE IF EXISTS `pokemons`;
 CREATE TABLE IF NOT EXISTS `pokemons` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -40,10 +46,7 @@ INSERT INTO `pokemons` (`id`, `name`, `image`, `weight`) VALUES
 	(14, 'Caterpie', 'https://img.pokemondb.net/sprites/home/normal/2x/avif/caterpie.avif', 220),
 	(15, 'Blastoise', 'https://img.pokemondb.net/sprites/home/normal/2x/avif/blastoise.avif', 345),
 	(16, 'Wartortle', 'https://img.pokemondb.net/sprites/home/normal/2x/avif/wartortle.avif', 890),
-	(17, 'Squirtle', 'https://img.pokemondb.net/sprites/home/normal/2x/avif/squirtle.avif', 896),
-	(22, 'Wartog', NULL, NULL),
-	(23, 'Wartogy', NULL, NULL),
-	(24, 'Wartogt', NULL, NULL);
+	(17, 'Squirtle', 'https://img.pokemondb.net/sprites/home/normal/2x/avif/squirtle.avif', 896);
 
 DROP TABLE IF EXISTS `types`;
 CREATE TABLE IF NOT EXISTS `types` (

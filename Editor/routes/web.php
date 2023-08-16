@@ -15,3 +15,4 @@ use App\Http\Controllers\Controller;
 
 Route::post('/pokemons/', [Controller::class, 'create']);
 Route::delete('/pokemons/', [Controller::class, 'delete']);
+Route::get('/completedb/', [Controller::class, 'completedb']);

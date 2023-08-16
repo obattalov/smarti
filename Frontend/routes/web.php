@@ -16,5 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [Controller::class, 'index'])->name('galery');
+Route::get('/completedb', [Controller::class, 'pokemonCompletedb'])->name('galery.completedb');
 Route::get('/editor', [Controller::class, 'editor'])->name('editor');
 Route::post('/editor', [Controller::class, 'pokemonActions']);

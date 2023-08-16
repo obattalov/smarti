@@ -14,6 +14,9 @@ class Controller extends BaseController
 
     public function index(Request $request) {
         $data = $this->getPokemonsData();
+        if (!(isset($data["pokemons"]) && $data["pokemons"])) {
+            return view('galery.empty');
+        }
         $filter = $request->all();
         return view('galery.index', compact('data', 'filter'));
     }
@@ -36,6 +39,16 @@ class Controller extends BaseController
         return $this->$action($request);
     }
     
+    public function pokemonCompletedb(Request $request) {
+        $response = \Http::get(Config('apis.EDITOR_MODULE_URL') . '/completedb/');
+        $result = json_decode($response, true);
+        $message = isset($result["message"]) ? $result["message"] : "Unknown error";
+        if ($response->status() != 200) {
+            die("Error while autocompleting: " . $message . "(status: " . $response->status() . ")");
+        }
+        return redirect()->route('galery');
+    }
+    
     private function pokemonCreate(Request $request) {
         $id = $request->input('id');
         $message = [];
@@ -47,11 +60,12 @@ class Controller extends BaseController
                 "is_error" => true
             ];
         } else {
-            $response = \Http::post(Config('apis.EDITOR_MODULE_URL') . '/pokemons/', compact('name'));
+            $data = $request->all();
+            $response = \Http::post(Config('apis.EDITOR_MODULE_URL') . '/pokemons/', $data);
             if ($response->status() != 200) {
                 $result = json_decode($response, true);
                 $message = [
-                    "message" => $result["message"],
+                    "message" => (isset($result["message"]) ? $result["message"] : "Unknown error") . " (Status: " . $response->status() . ")",
                     "is_error" => true
                 ];
             } else {

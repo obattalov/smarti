@@ -23,7 +23,7 @@ cd ..
 docker network connect modules-network database-module-mysql
 
 docker build -t database-module-image ./Database
-docker run -dit --ip 173.18.5.10 -p 8081:8001 --name database-module --network modules-network database-module-image
+docker run -dit --ip 173.18.5.10 --name database-module --network modules-network database-module-image
 
 docker build -t gallery-module-image ./Gallery
 docker build -t editor-module-image ./Editor

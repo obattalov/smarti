@@ -9,8 +9,25 @@
             @csrf
             <input type="hidden" name="action" value="create">
             <div class="mb-3">
-                <label for='name'>Pokemons' name</label>
+                <label for='name'>Name</label>
                 <input type="text" class="form-control" id='name' name='name' required>
+            </div>
+            <div class="mb-3">
+                <label for='image'>Image URL</label>
+                <input type="text" class="form-control" id='image' name='image'>
+            </div>
+            <div class="mb-3">
+                <label for='weight'>Weight</label>
+                <input type="text" class="form-control" id='weight' name='weight'>
+            </div>
+            <div class="mb-3">
+                <label>Types</label>
+                <?php foreach($data['types'] as $type) { ?>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name='type[]' id="ch<?=$type["id"]?>" value="<?=$type["id"]?>">
+                    <label for="ch<?=$type["id"]?>" class="form-check-label"><?=$type["name"]?></label>
+                </div>
+                <?php } ?>
             </div>
             <?php if (isset($data['message'])) {?>
             <h5 class="w-100 text-center mb-3" style="color:<?=$data['messageColor']?>"><?=$data['message']?></h5>
